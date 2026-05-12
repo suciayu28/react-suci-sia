@@ -1,88 +1,116 @@
+import { FaBell, FaEnvelope, FaCog, FaSearch, FaChevronDown } from "react-icons/fa";
 import { useState } from "react";
-import { FiSearch, FiCalendar, FiDownload, FiPlus, FiBell, FiX, FiArrowRight } from "react-icons/fi";
 
 const Header = () => {
-  // State untuk mengontrol pop-up pencarian
-  const [showSearch, setShowSearch] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex items-center justify-between py-4 pl-24 relative">
-      <div>
-        <h1 className="text-2xl font-serif italic font-semibold text-gray-900 tracking-tight">Lumière Cosmetics</h1>
-        <p className="text-[10px] text-rose-400 font-bold uppercase tracking-[0.3em]">Lumière Management System</p>
-      </div>
+    <>
+      {/* HEADER CONTAINER */}
+      <div className="flex items-center justify-between bg-white/80 backdrop-blur-md px-8 py-4 sticky top-0 z-40 border-b border-gray-100">
 
-      <div className="flex items-center gap-4">
-        {/* Search Bar Wrapper */}
-        <div className="relative">
-          <div className={`hidden md:flex items-center gap-3 bg-white border ${showSearch ? 'border-black ring-1 ring-black' : 'border-gray-100'} px-4 py-2 rounded-2xl shadow-sm transition-all duration-300`}>
-            <FiSearch className={showSearch ? "text-black" : "text-gray-400"} />
-            <input 
-              type="text" 
-              placeholder="Search orders..." 
-              onFocus={() => setShowSearch(true)}
-              // onBlur pakai delay supaya klik di item pop-up tidak langsung tertutup
-              onBlur={() => setTimeout(() => setShowSearch(false), 200)}
-              className="bg-transparent outline-none text-[11px] font-medium w-40" 
-            />
-          </div>
+        {/* SEARCH BAR MODERN */}
+        <div className="relative w-1/3 group">
+          <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-emerald-500 transition-colors" />
 
-          {/* --- POP-UP SEARCH RESULTS --- */}
-          {showSearch && (
-            <div className="absolute top-14 right-0 w-[320px] bg-white border border-gray-100 shadow-2xl rounded-[2rem] p-5 z-[100] animate-in fade-in slide-in-from-top-2 duration-200">
-              <div className="flex justify-between items-center mb-5 px-1">
-                <span className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-300">Quick Results</span>
-                <FiX className="text-gray-300 cursor-pointer hover:text-black" onClick={() => setShowSearch(false)} />
-              </div>
-              
-              <div className="space-y-3">
-                {/* Dummy Data Pop-up */}
-                {[
-                  { name: "Matte Lipstick Rose", cat: "Inventory" },
-                  { name: "Order #8842", cat: "Sales" },
-                  { name: "Glow Serum v2", cat: "Stock" }
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-2xl cursor-pointer transition-all group">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-rose-50 rounded-xl flex items-center justify-center text-rose-500 group-hover:bg-black group-hover:text-white transition-colors">
-                        <FiSearch size={12} />
-                      </div>
-                      <div>
-                        <p className="text-[11px] font-bold text-gray-700 tracking-tight">{item.name}</p>
-                        <p className="text-[8px] font-bold text-gray-300 uppercase tracking-widest">{item.cat}</p>
-                      </div>
-                    </div>
-                    <FiArrowRight className="text-gray-200 group-hover:text-black transition-colors" size={14} />
-                  </div>
-                ))}
-              </div>
-              
-              <div className="mt-5 pt-4 border-t border-gray-50 text-center">
-                <button className="text-[9px] font-black uppercase tracking-widest text-rose-400 hover:text-rose-600">View All Results</button>
-              </div>
+          <input
+            type="text"
+            placeholder="Search analytics, orders, or customers..."
+            onClick={() => setOpen(true)}
+            className="w-full pl-12 pr-4 py-3 rounded-2xl border-none bg-gray-50 font-barlow font-medium text-sm
+            focus:bg-white focus:ring-2 focus:ring-emerald-100 placeholder:text-gray-400
+            hover:bg-gray-100 transition-all cursor-pointer outline-none"
+            readOnly
+          />
+        </div>
+
+        {/* RIGHT SECTION */}
+        <div className="flex items-center gap-2">
+          
+          {/* ACTION ICONS */}
+          <div className="flex items-center gap-1 border-r border-gray-100 pr-4 mr-2">
+            <IconButton icon={<FaEnvelope />} />
+            <div className="relative">
+              <IconButton icon={<FaBell />} />
+              <span className="absolute top-2 right-2 w-4 h-4 bg-red-500 text-white text-[10px] font-black flex items-center justify-center rounded-full border-2 border-white">
+                5
+              </span>
             </div>
-          )}
-        </div>
+            <IconButton icon={<FaCog />} />
+          </div>
 
-        {/* Action Buttons Tetap Dipertahankan sesuai request kamu */}
-        <div className="flex items-center gap-2 border-l border-gray-100 pl-4">
-          <button title="Calendar" className="p-2.5 text-gray-400 hover:text-black transition-colors">
-            <FiCalendar size={18} />
-          </button>
-          <button className="bg-white border border-gray-100 text-gray-700 px-4 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-wider flex items-center gap-2 hover:bg-gray-50 transition-all shadow-sm">
-            <FiDownload size={14} /> Export
-          </button>
-          <button className="bg-black text-white px-4 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-wider flex items-center gap-2 hover:bg-rose-600 transition-all shadow-lg shadow-black/10">
-            <FiPlus size={14} /> Add Product
-          </button>
-          <div className="relative ml-2">
-            <FiBell size={20} className="text-gray-400" />
-            <span className="absolute top-0 right-0 w-2 h-2 bg-rose-500 rounded-full border-2 border-white"></span>
+          {/* PROFILE SECTION */}
+          <div className="flex items-center gap-3 pl-2 py-1 pr-1 rounded-2xl hover:bg-gray-50 transition-colors cursor-pointer group">
+            <div className="text-right hidden md:block">
+              <p className="text-sm font-poppins font-black text-gray-800 leading-none">Suci Dwimas Ayu</p>
+              <p className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest mt-1">Administrator</p>
+            </div>
+            <div className="relative">
+              <img
+                src="https://i.pravatar.cc/150?u=suci"
+                alt="profile"
+                className="w-10 h-10 rounded-2xl object-cover shadow-sm group-hover:shadow-emerald-100 transition-all"
+              />
+              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full"></div>
+            </div>
+            <FaChevronDown className="text-gray-300 text-xs group-hover:text-emerald-500 transition-colors mr-2" />
           </div>
         </div>
       </div>
-    </div>
+
+      {/* MODAL SEARCH (Emerald Style) */}
+      {open && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+          onClick={() => setOpen(false)}
+        >
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-gray-900/40 backdrop-blur-md animate-in fade-in duration-300" />
+          
+          <div
+            className="relative bg-white p-8 rounded-[2.5rem] w-full max-w-lg shadow-2xl animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-poppins font-black text-gray-800 tracking-tight">
+                Global Search
+              </h2>
+              <button 
+                onClick={() => setOpen(false)}
+                className="text-gray-400 hover:text-red-500 transition-colors font-bold text-sm"
+              >
+                Esc
+              </button>
+            </div>
+
+            <div className="relative">
+              <FaSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-emerald-500 text-xl" />
+              <input
+                autoFocus
+                type="text"
+                placeholder="Type keywords (e.g. 'Orders', 'Reports')..."
+                className="w-full bg-gray-50 border-none pl-14 pr-6 py-5 rounded-[1.5rem] font-barlow font-bold text-lg focus:ring-2 focus:ring-emerald-500 outline-none transition-all shadow-inner"
+              />
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-2 text-xs font-bold text-gray-400">
+              <span className="uppercase tracking-widest">Quick links:</span>
+              <button className="text-emerald-500 hover:underline">#Products</button>
+              <button className="text-emerald-500 hover:underline">#Invoice</button>
+              <button className="text-emerald-500 hover:underline">#Customers</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
+
+/* Reusable Icon Button Component */
+const IconButton = ({ icon }) => (
+  <button className="p-3 text-gray-400 hover:text-emerald-500 hover:bg-emerald-50 rounded-xl transition-all duration-300">
+    {icon}
+  </button>
+);
 
 export default Header;

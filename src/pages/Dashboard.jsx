@@ -1,119 +1,142 @@
-import { FiArrowUpRight, FiHeart, FiShoppingBag, FiStar, FiZap } from "react-icons/fi";
-import { AreaChart, Area, ResponsiveContainer, XAxis, Tooltip } from "recharts";
+import PageHeader from "../components/PageHeader";
+import {
+  FaShoppingCart,
+  FaTruck,
+  FaTimesCircle,
+  FaDollarSign,
+  FaUsers,
+  FaArrowUp,
+} from "react-icons/fa";
+
+import {
+  PieChart,
+  Pie,
+  Cell,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 const Dashboard = () => {
-  const chartData = [
-    { n: 'Mon', v: 3100 }, { n: 'Tue', v: 4200 }, { n: 'Wed', v: 3800 }, 
-    { n: 'Thu', v: 5100 }, { n: 'Fri', v: 4800 }, { n: 'Sat', v: 6200 }, { n: 'Sun', v: 5800 }
+  const pieData = [
+    { name: "Total Order", value: 81 },
+    { name: "Customer Growth", value: 22 },
+    { name: "Total Revenue", value: 62 },
   ];
 
-  // PINDAHKAN VARIABEL KE SINI (Di luar return)
-  const products = [
-  { 
-    name: "Creamy Matte Lipstick", 
-    price: "$24.00", 
-    sales: "1.2k sold", 
-    // Kotak warna Rose Pink (FFE4E1) dengan teks produk
-    img: "https://dummyimage.com/200x200/FFE4E1/FF4D94.png&text=Lipstick" 
-  },
-  { 
-    name: "Organic Face Serum", 
-    price: "$48.00", 
-    sales: "840 sold", 
-    img: "https://dummyimage.com/200x200/FFE4E1/FF4D94.png&text=Serum" 
-  },
-  { 
-    name: "Lash Extension Mascara", 
-    price: "$19.00", 
-    sales: "2.1k sold", 
-    // Link Mascara yang tadi error gue ganti pake placeholder pasti
-    img: "https://dummyimage.com/200x200/FFE4E1/FF4D94.png&text=Mascara" 
-  },
-];
+  const lineData = [
+    { name: "Sun", value: 100 },
+    { name: "Mon", value: 200 },
+    { name: "Tue", value: 350 },
+    { name: "Wed", value: 200 },
+    { name: "Thu", value: 150 },
+    { name: "Fri", value: 250 },
+    { name: "Sat", value: 400 },
+  ];
+
+  const COLORS = ["#10b981", "#3b82f6", "#f59e0b"];
 
   return (
-    <div className="space-y-8 animate-fadeIn">
-      
-      {/* KATEGORI PENJUALAN */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        {[
-          { label: "Daily Revenue", val: "$4,250", icon: <FiZap />, color: "bg-amber-50 text-amber-600" },
-          { label: "Beauty Members", val: "2,410", icon: <FiHeart />, color: "bg-rose-50 text-rose-600" },
-          { label: "Orders Shipped", val: "184", icon: <FiShoppingBag />, color: "bg-gray-50 text-black" },
-          { label: "Store Rating", val: "4.9/5", icon: <FiStar />, color: "bg-emerald-50 text-emerald-600" },
-        ].map((item, i) => (
-          <div key={i} className="bg-white p-6 rounded-[2rem] border border-gray-50 shadow-[0_8px_30px_rgb(0,0,0,0.02)] flex flex-col gap-4 hover:shadow-md transition-all group">
-            <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-lg ${item.color}`}>
-              {item.icon}
-            </div>
-            <div>
-              <p className="text-[9px] font-black text-gray-300 uppercase tracking-[0.2em] mb-1">{item.label}</p>
-              <h3 className="text-2xl font-serif italic font-semibold tracking-tight">{item.val}</h3>
-            </div>
-          </div>
-        ))}
+    <div className="p-6 font-barlow animate-in fade-in duration-700">
+      <PageHeader title="Dashboard Overview" breadcrumb={["Home", "Dashboard"]} />
+
+      {/* STATS CARDS */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mt-8">
+        <StatCard icon={<FaShoppingCart />} label="Total Orders" value="75" trend="+12%" color="emerald" />
+        <StatCard icon={<FaTruck />} label="Delivered" value="175" trend="+5%" color="blue" />
+        <StatCard icon={<FaTimesCircle />} label="Canceled" value="40" trend="-2%" color="red" />
+        <StatCard icon={<FaDollarSign />} label="Revenue" value="Rp 12.8M" trend="+18%" color="amber" />
+        <StatCard icon={<FaUsers />} label="Customers" value="320" trend="+24%" color="purple" />
       </div>
 
-      {/* ANALYTICS & FEATURED */}
-      <div className="grid grid-cols-12 gap-8">
-        <div className="col-span-12 lg:col-span-8 bg-white p-8 rounded-[2.5rem] border border-gray-50 shadow-sm">
-          <div className="flex justify-between items-center mb-8 px-2">
+      {/* CHART SECTION */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-10">
+        <div className="lg:col-span-2 bg-white p-8 rounded-[2.5rem] shadow-soft border border-gray-100 relative overflow-hidden">
+          <div className="flex justify-between items-center mb-8 relative z-10">
             <div>
-              <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-1">Revenue Stream</h4>
-              <p className="text-xs font-serif italic text-gray-500">Beauty products sales growth</p>
+              <h2 className="font-poppins font-black text-gray-800 text-xl tracking-tight">Sales Performance</h2>
+              <p className="text-gray-400 text-xs font-bold uppercase tracking-widest mt-1">Weekly analysis</p>
             </div>
+            <button className="px-4 py-2 bg-gray-50 text-gray-500 rounded-xl text-xs font-bold hover:bg-emerald-50 hover:text-emerald-500 transition">Reports</button>
           </div>
-          <div className="h-[300px] w-full">
+
+          <div className="h-[300px] w-full relative z-10">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={chartData}>
-                <defs>
-                  <linearGradient id="makeupGlow" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#FB7185" stopOpacity={0.15}/>
-                    <stop offset="95%" stopColor="#FB7185" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <Tooltip contentStyle={{ borderRadius: '20px', border: 'none', boxShadow: '0 20px 40px rgba(0,0,0,0.05)' }} />
-                <Area type="monotone" dataKey="v" stroke="#000" strokeWidth={3} fill="url(#makeupGlow)" />
-              </AreaChart>
+              <LineChart data={lineData}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9ca3af', fontSize: 12, fontWeight: 'bold'}} dy={10} />
+                <YAxis hide />
+                <Tooltip contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)'}} />
+                <Line type="monotone" dataKey="value" stroke="#10b981" strokeWidth={4} dot={{ r: 6, fill: "#10b981", strokeWidth: 3, stroke: "#fff" }} activeDot={{ r: 8, strokeWidth: 0 }} />
+              </LineChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        <div className="col-span-12 lg:col-span-4 bg-[#111] rounded-[2.5rem] p-10 text-white relative overflow-hidden group">
-          <div className="relative z-10 flex flex-col h-full">
-            <span className="text-rose-500 text-[10px] font-black uppercase tracking-[0.5em] mb-6">Seasonal Pick</span>
-            <h2 className="text-4xl font-serif italic font-medium leading-[1.1] mb-6">Silk Finish <br/> Foundation</h2>
-            <button className="mt-auto flex items-center gap-3 text-[10px] font-black uppercase tracking-widest border-b border-white/20 pb-2 hover:text-rose-400 transition-all">
-              Update Inventory <FiArrowUpRight />
-            </button>
-          </div>
-          <div className="absolute right-[-15%] bottom-[-5%] w-3/4 h-3/4 bg-[url('https://images.unsplash.com/photo-1596462502278-27bfad450216?w=500')] bg-cover grayscale opacity-40 group-hover:grayscale-0 transition-all duration-1000"></div>
-        </div>
-      </div>
-
-      {/* BEST SELLER INVENTORY */}
-      <div className="bg-white p-8 rounded-[2.5rem] border border-gray-50 shadow-sm">
-        <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 mb-8">Best Seller Inventory</h4>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {products.map((prod, i) => (
-            <div key={i} className="flex items-center gap-5 group cursor-pointer">
-              <div className="relative">
-                {/* Hapus class grayscale agar placeholder pink-nya terlihat jelas */}
-                <img src={prod.img} alt={prod.name} className="w-20 h-20 rounded-3xl object-cover transition-all duration-500 group-hover:scale-110 shadow-sm" />
-                <div className="absolute -top-2 -right-2 bg-black text-white text-[8px] font-black px-2 py-1 rounded-full">{i + 1}</div>
-              </div>
-              <div>
-                <h5 className="text-[11px] font-black uppercase tracking-tight text-gray-800 mb-1">{prod.name}</h5>
-                <div className="flex gap-4 items-center">
-                  <span className="text-xs font-serif italic text-rose-500">{prod.price}</span>
-                  <span className="text-[9px] font-bold text-gray-300 uppercase tracking-tighter">{prod.sales}</span>
-                </div>
-              </div>
+        <div className="bg-white p-8 rounded-[2.5rem] shadow-soft border border-gray-100 flex flex-col justify-center">
+          <h2 className="font-poppins font-black text-gray-800 text-xl tracking-tight mb-2 text-center">Business Reach</h2>
+          <div className="h-[250px] relative">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie data={pieData} innerRadius={70} outerRadius={90} paddingAngle={8} dataKey="value">
+                  {pieData.map((entry, index) => (
+                    // PERBAIKAN: Gunakan backtick di Cell key
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+              <span className="text-3xl font-black text-gray-800">85%</span>
+              <span className="text-[10px] font-black text-gray-400 uppercase">Efficiency</span>
             </div>
-          ))}
+          </div>
+          <div className="mt-6 space-y-3">
+            {pieData.map((item, i) => (
+              <div key={i} className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full" style={{backgroundColor: COLORS[i]}}></div>
+                  <span className="text-sm font-bold text-gray-600">{item.name}</span>
+                </div>
+                <span className="text-sm font-black text-gray-800">{item.value}%</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+    </div>
+  );
+};
 
+const StatCard = ({ icon, label, value, trend, color }) => {
+  const colorMap = {
+    emerald: "bg-emerald-50 text-emerald-500",
+    blue: "bg-blue-50 text-blue-500",
+    red: "bg-red-50 text-red-500",
+    amber: "bg-amber-50 text-amber-500",
+    purple: "bg-purple-50 text-purple-500",
+  };
+
+  return (
+    <div className="bg-white p-6 rounded-[2rem] shadow-soft border border-gray-50 hover:shadow-xl transition-all duration-300 group cursor-default">
+      <div className="flex justify-between items-start mb-4">
+        {/* PERBAIKAN: Gunakan backtick pada className */}
+        <div className={`${colorMap[color]} p-4 rounded-2xl transition-transform group-hover:scale-110 duration-300`}>
+          {icon}
+        </div>
+        <div className="flex items-center gap-1 text-[10px] font-black text-emerald-500 bg-emerald-50 px-2 py-1 rounded-lg">
+          <FaArrowUp size={8} /> {trend}
+        </div>
+      </div>
+      <div>
+        <h2 className="font-poppins font-black text-2xl text-gray-800 tracking-tight">{value}</h2>
+        <p className="text-gray-400 text-[10px] font-black uppercase tracking-[0.15em] mt-1">{label}</p>
+      </div>
     </div>
   );
 };
