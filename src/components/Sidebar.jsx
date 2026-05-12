@@ -8,6 +8,7 @@ import {
   FaUserSlash 
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+import { HiOutlineSquares2X2, HiOutlineShoppingBag, HiOutlineUsers, HiOutlineChartBar, HiOutlineArrowLeftOnRectangle } from "react-icons/hi2";
 
 const Sidebar = () => {
   // Fungsi styling untuk menu aktif/tidak aktif
@@ -116,4 +117,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default Sidebar; // <--- INI TADI YANG ILANG!

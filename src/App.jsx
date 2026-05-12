@@ -49,6 +49,7 @@ function App() {
           <Route path="*" element={<ErrorPage code="404" title="Page Not Found" description="Error 404" image={img404} />} />
         </Route>
 
+        {/* AuthLayout: Login/Register dengan nuansa Rose/Pink */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
