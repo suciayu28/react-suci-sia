@@ -2,11 +2,16 @@ import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./assets/tailwind.css";
 import Loading from "./components/Loading";
-// import MainLayout from "./layouts/MainLayout";
-// import AuthLayout from "./layouts/AuthLayout";
-//  format Lazy
+
+// format Lazy
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const Customers = React.lazy(() => import("./pages/Customers"));
+const Products = React.lazy(() => import("./pages/Products")); 
+const ProductDetail = React.lazy(() => import("./pages/ProductDetail")); 
+
+// TAMBAHKAN INI: Import lazy untuk halaman detail customer
+const CustomersDetail = React.lazy(() => import("./pages/CustomersDetail")); 
+
 const Orders = React.lazy(() => import("./pages/Orders"));
 const Login = React.lazy(() => import("./pages/auth/Login"));
 const Register = React.lazy(() => import("./pages/auth/Register"));
@@ -15,10 +20,7 @@ const ErrorPage = React.lazy(() => import("./pages/NotFound"));
 const MainLayout = React.lazy(() => import("./layouts/MainLayout"));
 const AuthLayout = React.lazy(() => import("./layouts/AuthLayout"));
 
-
-
-
-// Import Gambar
+// Import Gambar untuk Error Pages
 import img400 from "./assets/400.png";
 import img401 from "./assets/401.png";
 import img403 from "./assets/403.png";
@@ -26,58 +28,25 @@ import img404 from "./assets/404.png";
 
 function App() {
   return (
-    
     <Suspense fallback={<Loading />}>
       <Routes>
+        {/* Rute yang menggunakan Sidebar & Navbar (MainLayout) */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/customers" element={<Customers />} />
+          
+          {/* TAMBAHKAN INI: Route baru untuk detail customer */}
+          <Route path="/customers/:id" element={<CustomersDetail />} />
+          
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
 
-          <Route
-            path="/400"
-            element={
-              <ErrorPage
-                code="400"
-                title="Oops! Halaman Tidak Ditemukan"
-                description="Halaman yang Anda cari tidak dapat ditemukan."
-                image={img400}
-              />
-            }
-          />
-          <Route
-            path="/401"
-            element={
-              <ErrorPage
-                code="401"
-                title="Akses Tidak Sah"
-                description="Maaf, Anda harus masuk terlebih dahulu."
-                image={img401}
-              />
-            }
-          />
-          <Route
-            path="/403"
-            element={
-              <ErrorPage
-                code="403"
-                title="Akses Ditolak"
-                description="Ups! Anda tidak memiliki izin."
-                image={img403}
-              />
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <ErrorPage
-                code="404"
-                title="Page Not Found"
-                description="Ups! Halaman tidak ditemukan."
-                image={img404}
-              />
-            }
-          />
+          {/* Error Pages */}
+          <Route path="/400" element={<ErrorPage code="400" title="Oops!" description="Error 400" image={img400} />} />
+          <Route path="/401" element={<ErrorPage code="401" title="Akses Tidak Sah" description="Error 401" image={img401} />} />
+          <Route path="/403" element={<ErrorPage code="403" title="Akses Ditolak" description="Error 403" image={img403} />} />
+          <Route path="*" element={<ErrorPage code="404" title="Page Not Found" description="Error 404" image={img404} />} />
         </Route>
 
         <Route element={<AuthLayout />}>
