@@ -12,6 +12,9 @@ const ProductDetail = React.lazy(() => import("./pages/ProductDetail"));
 // TAMBAHKAN INI: Import lazy untuk halaman detail customer
 const CustomersDetail = React.lazy(() => import("./pages/CustomersDetail")); 
 
+// TAMBAHKAN INI: Import lazy untuk halaman Components (Playground)
+const Components = React.lazy(() => import("./pages/Components"));
+
 const Orders = React.lazy(() => import("./pages/Orders"));
 const Login = React.lazy(() => import("./pages/auth/Login"));
 const Register = React.lazy(() => import("./pages/auth/Register"));
@@ -41,6 +44,9 @@ function App() {
           
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetail />} />
+
+          {/* TAMBAHKAN INI: Route baru untuk halaman Components sesuai Modul Pertemuan 10 */}
+          <Route path="/components" element={<Components />} />
 
           {/* Error Pages */}
           <Route path="/400" element={<ErrorPage code="400" title="Oops!" description="Error 400" image={img400} />} />

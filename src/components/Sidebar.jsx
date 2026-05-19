@@ -1,17 +1,16 @@
 import { 
   FaHome, 
   FaClipboardList, 
-  FaBoxOpen, // Icon untuk Products
+  FaBoxOpen, 
   FaFileAlt, 
   FaExclamationTriangle, 
   FaLock, 
   FaUserSlash 
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import { HiOutlineSquares2X2, HiOutlineShoppingBag, HiOutlineUsers, HiOutlineChartBar, HiOutlineArrowLeftOnRectangle } from "react-icons/hi2";
+import { HiOutlineSquares2X2 } from "react-icons/hi2"; // Ikon kotak untuk Components
 
 const Sidebar = () => {
-  // Fungsi styling untuk menu aktif/tidak aktif
   const menuClass = ({ isActive }) =>
     `flex cursor-pointer items-center rounded-xl p-4 space-x-3 transition-all duration-200 ${
       isActive
@@ -28,7 +27,7 @@ const Sidebar = () => {
           Sedap<span className="text-green-500">.</span>
         </h1>
         <p className="text-gray-400 text-xs uppercase tracking-widest font-semibold mt-1">
-          Admin Dashboard
+          Modern Admin Dashboard
         </p>
       </div>
 
@@ -49,7 +48,13 @@ const Sidebar = () => {
             </NavLink>
           </li>
 
-          {/* MENU PRODUCTS (BARU) */}
+          <li>
+            <NavLink to="/customers" className={menuClass}>
+              <FaFileAlt size={20} />
+              <span>Customers</span>
+            </NavLink>
+          </li>
+
           <li>
             <NavLink to="/products" className={menuClass}>
               <FaBoxOpen size={20} />
@@ -57,10 +62,11 @@ const Sidebar = () => {
             </NavLink>
           </li>
 
+          {/* MENU COMPONENTS (SESUAI MODUL PERTEMUAN 10) */}
           <li>
-            <NavLink to="/customers" className={menuClass}>
-              <FaFileAlt size={20} />
-              <span>Customers</span>
+            <NavLink to="/components" className={menuClass}>
+              <HiOutlineSquares2X2 size={20} />
+              <span>Components</span>
             </NavLink>
           </li>
 
@@ -92,7 +98,7 @@ const Sidebar = () => {
         </ul>
       </nav>
 
-      {/* UPGRADE / ADD MENU CARD */}
+      {/* FOOTER SIDEBAR (UPGRADE/COPYRIGHT) TETAP SAMA */}
       <div className="mt-auto">
         <div className="bg-gradient-to-br from-green-500 to-green-600 text-white p-5 rounded-2xl shadow-lg shadow-green-100">
           <p className="text-xs font-medium mb-3 leading-relaxed opacity-90">
@@ -103,7 +109,6 @@ const Sidebar = () => {
           </button>
         </div>
 
-        {/* COPYRIGHT & BRANDING */}
         <div className="mt-6 mb-2 text-center">
           <h2 className="text-[12px] font-bold text-gray-700">
             Sedap Restaurant POS
@@ -117,4 +122,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar; // <--- INI TADI YANG ILANG!
+export default Sidebar;
