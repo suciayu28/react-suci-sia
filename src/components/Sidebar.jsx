@@ -1,26 +1,26 @@
-import { 
-  FaHome, 
-  FaClipboardList, 
-  FaBoxOpen, 
-  FaFileAlt, 
-  FaExclamationTriangle, 
-  FaLock, 
-  FaUserSlash 
+import {
+  FaHome,
+  FaClipboardList,
+  FaBoxOpen,
+  FaFileAlt,
+  FaExclamationTriangle,
+  FaLock,
+  FaUserSlash,
+  FaMicrochip
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { HiOutlineSquares2X2 } from "react-icons/hi2"; // Ikon kotak untuk Components
 
 const Sidebar = () => {
   const menuClass = ({ isActive }) =>
-    `flex cursor-pointer items-center rounded-xl p-4 space-x-3 transition-all duration-200 ${
-      isActive
-        ? "text-green-600 bg-green-100 font-extrabold shadow-sm"
-        : "text-gray-600 hover:text-green-600 hover:bg-green-50 hover:font-bold"
+    `flex cursor-pointer items-center rounded-xl p-4 space-x-3 transition-all duration-200 ${isActive
+      ? "text-green-600 bg-green-100 font-extrabold shadow-sm"
+      : "text-gray-600 hover:text-green-600 hover:bg-green-50 hover:font-bold"
     }`;
 
   return (
     <div className="w-64 bg-white min-h-screen shadow-lg p-4 flex flex-col">
-      
+
       {/* LOGO SECTION */}
       <div className="mb-8 px-4">
         <h1 className="text-3xl font-bold tracking-tight">
@@ -67,6 +67,13 @@ const Sidebar = () => {
             <NavLink to="/components" className={menuClass}>
               <HiOutlineSquares2X2 size={20} />
               <span>Components</span>
+            </NavLink>
+          </li>
+            {/* PERBAIKAN: Mengubah div menjadi NavLink untuk Fitur Xyz */}
+          <li>
+            <NavLink to="/fiturXyz" className={menuClass}>
+              <FaMicrochip size={20} /> 
+              <span>Fitur Xyz</span>
             </NavLink>
           </li>
 

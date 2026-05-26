@@ -1,4 +1,4 @@
-import React, { Suspense } from "react"; 
+import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./assets/tailwind.css";
 import Loading from "./components/Loading";
@@ -6,11 +6,11 @@ import Loading from "./components/Loading";
 // format Lazy
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const Customers = React.lazy(() => import("./pages/Customers"));
-const Products = React.lazy(() => import("./pages/Products")); 
-const ProductDetail = React.lazy(() => import("./pages/ProductDetail")); 
+const Products = React.lazy(() => import("./pages/Products"));
+const ProductDetail = React.lazy(() => import("./pages/ProductDetail"));
 
 // TAMBAHKAN INI: Import lazy untuk halaman detail customer
-const CustomersDetail = React.lazy(() => import("./pages/CustomersDetail")); 
+const CustomersDetail = React.lazy(() => import("./pages/CustomersDetail"));
 
 // TAMBAHKAN INI: Import lazy untuk halaman Components (Playground)
 const Components = React.lazy(() => import("./pages/Components"));
@@ -22,6 +22,7 @@ const Forgot = React.lazy(() => import("./pages/auth/Forgot"));
 const ErrorPage = React.lazy(() => import("./pages/NotFound"));
 const MainLayout = React.lazy(() => import("./layouts/MainLayout"));
 const AuthLayout = React.lazy(() => import("./layouts/AuthLayout"));
+const FiturXyz = React.lazy(() => import("./pages/fiturXyz"));
 
 // Import Gambar untuk Error Pages
 import img400 from "./assets/400.png";
@@ -38,16 +39,17 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/customers" element={<Customers />} />
-          
+
           {/* TAMBAHKAN INI: Route baru untuk detail customer */}
           <Route path="/customers/:id" element={<CustomersDetail />} />
-          
+
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetail />} />
 
           {/* TAMBAHKAN INI: Route baru untuk halaman Components sesuai Modul Pertemuan 10 */}
           <Route path="/components" element={<Components />} />
-
+          {/* TAMBAHKAN INI: Route baru untuk halaman fitur xyz sesuai Modul Pertemuan 10 */}
+          <Route path="/fiturXyz" element={<FiturXyz />} />
           {/* Error Pages */}
           <Route path="/400" element={<ErrorPage code="400" title="Oops!" description="Error 400" image={img400} />} />
           <Route path="/401" element={<ErrorPage code="401" title="Akses Tidak Sah" description="Error 401" image={img401} />} />
