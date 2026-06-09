@@ -24,6 +24,9 @@ const MainLayout = React.lazy(() => import("./layouts/MainLayout"));
 const AuthLayout = React.lazy(() => import("./layouts/AuthLayout"));
 const FiturXyz = React.lazy(() => import("./pages/fiturXyz"));
 
+// TAMBAHKAN INI: Import lazy untuk halaman Notes
+const Notes = React.lazy(() => import("./pages/Notes"));
+
 // Import Gambar untuk Error Pages
 import img400 from "./assets/400.png";
 import img401 from "./assets/401.png";
@@ -50,6 +53,10 @@ function App() {
           <Route path="/components" element={<Components />} />
           {/* TAMBAHKAN INI: Route baru untuk halaman fitur xyz sesuai Modul Pertemuan 10 */}
           <Route path="/fiturXyz" element={<FiturXyz />} />
+          
+          {/* TAMBAHKAN INI: Route baru untuk halaman notes */}
+          <Route path="/notes" element={<Notes />} />
+
           {/* Error Pages */}
           <Route path="/400" element={<ErrorPage code="400" title="Oops!" description="Error 400" image={img400} />} />
           <Route path="/401" element={<ErrorPage code="401" title="Akses Tidak Sah" description="Error 401" image={img401} />} />

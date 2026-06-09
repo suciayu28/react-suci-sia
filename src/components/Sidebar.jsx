@@ -6,7 +6,8 @@ import {
   FaExclamationTriangle,
   FaLock,
   FaUserSlash,
-  FaMicrochip
+  FaMicrochip,
+  FaStickyNote // PERBAIKAN: Menggunakan versi standard filled agar aman di sub-folder /fa
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { HiOutlineSquares2X2 } from "react-icons/hi2"; // Ikon kotak untuk Components
@@ -69,11 +70,19 @@ const Sidebar = () => {
               <span>Components</span>
             </NavLink>
           </li>
-            {/* PERBAIKAN: Mengubah div menjadi NavLink untuk Fitur Xyz */}
+
           <li>
             <NavLink to="/fiturXyz" className={menuClass}>
               <FaMicrochip size={20} /> 
               <span>Fitur Xyz</span>
+            </NavLink>
+          </li>
+
+          {/* TAMBAHAN: MENU NOTES */}
+          <li>
+            <NavLink to="/notes" className={menuClass}>
+              <FaStickyNote size={20} />
+              <span>Notes</span>
             </NavLink>
           </li>
 
