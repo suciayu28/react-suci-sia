@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./assets/tailwind.css";
 import Loading from "./components/Loading";
+import { AuthGuard, AdminGuard, GuestGuard } from "./lib/routeGuard";
 
 // format Lazy
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
@@ -38,24 +39,20 @@ function App() {
     <Suspense fallback={<Loading />}>
       <Routes>
         {/* Rute yang menggunakan Sidebar & Navbar (MainLayout) */}
-        <Route element={<MainLayout />}>
+        <Route element={<AuthGuard><MainLayout /></AuthGuard>}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/orders" element={<Orders />} />
-          <Route path="/customers" element={<Customers />} />
-
-          {/* TAMBAHKAN INI: Route baru untuk detail customer */}
-          <Route path="/customers/:id" element={<CustomersDetail />} />
-
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetail />} />
+          <Route path="/notes" element={<Notes />} />
+
+          <Route path="/customers" element={<AdminGuard><Customers /></AdminGuard>} />
+          <Route path="/customers/:id" element={<AdminGuard><CustomersDetail /></AdminGuard>} />
 
           {/* TAMBAHKAN INI: Route baru untuk halaman Components sesuai Modul Pertemuan 10 */}
           <Route path="/components" element={<Components />} />
           {/* TAMBAHKAN INI: Route baru untuk halaman fitur xyz sesuai Modul Pertemuan 10 */}
           <Route path="/fiturXyz" element={<FiturXyz />} />
-          
-          {/* TAMBAHKAN INI: Route baru untuk halaman notes */}
-          <Route path="/notes" element={<Notes />} />
 
           {/* Error Pages */}
           <Route path="/400" element={<ErrorPage code="400" title="Oops!" description="Error 400" image={img400} />} />
@@ -65,7 +62,7 @@ function App() {
         </Route>
 
         {/* AuthLayout: Login/Register dengan nuansa Rose/Pink */}
-        <Route element={<AuthLayout />}>
+        <Route element={<GuestGuard><AuthLayout /></GuestGuard>}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot" element={<Forgot />} />
